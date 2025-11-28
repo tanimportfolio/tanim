@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Tanim - Personal Portfolio</title>
+  <title>Tanim | Sunset Rider Portfolio</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     * {
       box-sizing: border-box;
@@ -12,150 +12,473 @@
       padding: 0;
     }
 
+    :root {
+      --bg-main: #050712;
+      --bg-card: rgba(10, 13, 24, 0.96);
+      --accent-1: #ffb347;
+      --accent-2: #ff6b6b;
+      --accent-soft: #302b63;
+      --text-main: #f5f5f5;
+      --text-soft: #c3c7e5;
+      --border-soft: rgba(255, 255, 255, 0.06);
+      --radius-xl: 24px;
+      --shadow-heavy: 0 26px 80px rgba(0, 0, 0, 0.85);
+      --transition-fast: 0.25s ease;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-      background: radial-gradient(circle at top, #151a28 0, #050712 55%, #000000 100%);
-      color: #f5f5f5;
+      background: radial-gradient(circle at top, #151a28 0, #050712 45%, #000000 100%);
+      color: var(--text-main);
       min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      padding: 40px 16px;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
     }
 
-    .card {
-      width: 100%;
-      max-width: 900px;
-      background: rgba(10, 13, 24, 0.96);
-      border-radius: 24px;
-      padding: 32px 24px 26px;
-      box-shadow:
-        0 22px 60px rgba(0, 0, 0, 0.7),
-        0 0 0 1px rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.04);
-      backdrop-filter: blur(18px);
-    }
-
-    @media (min-width: 768px) {
-      .card {
-        padding: 40px 40px 30px;
-      }
-    }
-
-    .top-section {
-      display: flex;
-      flex-direction: column;
-      gap: 24px;
-      align-items: center;
-    }
-
-    @media (min-width: 768px) {
-      .top-section {
-        flex-direction: row;
-        align-items: flex-start;
-      }
-    }
-
-    .profile-photo {
-      flex-shrink: 0;
-      width: 180px;
-      height: 220px;
-      border-radius: 20px;
+    /* ---------- Animated background blobs ---------- */
+    .bg-blur {
+      position: fixed;
+      inset: 0;
       overflow: hidden;
-      border: 2px solid rgba(255, 255, 255, 0.16);
-      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.75);
+      z-index: -2;
+      pointer-events: none;
     }
 
-    .profile-photo img {
+    .bg-blob {
+      position: absolute;
+      width: 380px;
+      height: 380px;
+      border-radius: 999px;
+      filter: blur(80px);
+      opacity: 0.5;
+      mix-blend-mode: screen;
+      animation: float 18s infinite alternate ease-in-out;
+    }
+
+    .bg-blob:nth-child(1) {
+      top: -120px;
+      left: -60px;
+      background: #ff6b6b;
+    }
+    .bg-blob:nth-child(2) {
+      top: 40%;
+      right: -80px;
+      background: #4facfe;
+      animation-delay: 4s;
+    }
+    .bg-blob:nth-child(3) {
+      bottom: -160px;
+      left: 20%;
+      background: #fbc531;
+      animation-delay: 8s;
+    }
+
+    @keyframes float {
+      0%   { transform: translate3d(0, 0, 0) scale(1); }
+      50%  { transform: translate3d(40px, -40px, 0) scale(1.1); }
+      100% { transform: translate3d(-40px, 20px, 0) scale(1.05); }
+    }
+
+    /* ---------- Layout ---------- */
+    .page {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 20px 16px 60px;
+    }
+
+    @media (min-width: 900px) {
+      .page {
+        padding: 26px 12px 80px;
+      }
+    }
+
+    /* ---------- Navbar ---------- */
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .nav-logo {
+      width: 32px;
+      height: 32px;
+      border-radius: 12px;
+      background: radial-gradient(circle at 20% 0%, #ffb347, #ff6b6b);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      font-weight: 700;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.7);
+    }
+
+    .nav-title {
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      color: #c3c7e5;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 10px;
+      font-size: 0.78rem;
+    }
+
+    .nav-link {
+      text-decoration: none;
+      color: #d9ddff;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(8px);
+      transition: background var(--transition-fast), border-color var(--transition-fast), transform 0.2s ease;
+    }
+
+    .nav-link:hover {
+      background: rgba(255, 255, 255, 0.09);
+      border-color: rgba(255, 189, 89, 0.7);
+      transform: translateY(-1px);
+    }
+
+    /* ---------- Hero ---------- */
+    .hero {
+      margin-top: 10px;
+      margin-bottom: 26px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr);
+      gap: 22px;
+    }
+
+    @media (min-width: 900px) {
+      .hero {
+        grid-template-columns: minmax(0, 1.4fr) minmax(0, 1.1fr);
+        align-items: center;
+      }
+    }
+
+    .hero-text {
+      padding: 20px 18px;
+      border-radius: var(--radius-xl);
+      background: radial-gradient(circle at top left, rgba(255, 179, 71, 0.12), transparent 60%),
+                  radial-gradient(circle at bottom, rgba(79, 172, 254, 0.16), transparent 60%),
+                  rgba(10, 13, 24, 0.96);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: var(--shadow-heavy);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-text::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, rgba(255, 255, 255, 0.15), transparent 50%);
+      opacity: 0;
+      pointer-events: none;
+      transform: translateX(-40%);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .hero-text:hover::before {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .hero-kicker {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.32em;
+      color: #9ea3d8;
+      margin-bottom: 10px;
+    }
+
+    .hero-title {
+      font-size: 2.2rem;
+      line-height: 1.15;
+      margin-bottom: 10px;
+    }
+
+    .hero-title span {
+      background: linear-gradient(120deg, #ffb347, #ff6b6b);
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .hero-subline {
+      font-size: 0.96rem;
+      color: #c3c7e5;
+      margin-bottom: 14px;
+    }
+
+    .hero-subline strong {
+      color: #ffd27f;
+    }
+
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .hero-tag {
+      font-size: 0.78rem;
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      background: rgba(6, 9, 20, 0.96);
+      color: #dfe3ff;
+    }
+
+    .hero-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 4px;
+    }
+
+    .btn {
+      border-radius: 999px;
+      border: none;
+      outline: none;
+      font-size: 0.86rem;
+      padding: 8px 16px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: transform 0.18s ease, box-shadow 0.2s ease, background 0.18s ease, color 0.18s ease;
+    }
+
+    .btn-primary {
+      background: linear-gradient(130deg, #ffb347, #ff6b6b);
+      color: #151515;
+      font-weight: 600;
+      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.8);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px) scale(1.01);
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.9);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      color: #e0e3ff;
+    }
+
+    .btn-ghost:hover {
+      background: rgba(255, 255, 255, 0.08);
+      transform: translateY(-1px);
+    }
+
+    /* Hero side card */
+    .hero-card {
+      margin: 0 auto;
+      max-width: 360px;
+      border-radius: var(--radius-xl);
+      background: radial-gradient(circle at 0 0, rgba(255, 255, 255, 0.06), transparent 55%),
+                  rgba(7, 9, 20, 0.98);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: var(--shadow-heavy);
+      padding: 16px 16px 18px;
+      position: relative;
+      overflow: hidden;
+      transform-style: preserve-3d;
+      transition: transform 0.18s ease-out;
+    }
+
+    .hero-card::before {
+      content: "";
+      position: absolute;
+      inset: -1px;
+      border-radius: inherit;
+      border: 1px solid transparent;
+      background: linear-gradient(130deg, rgba(255, 179, 71, 0.5), rgba(79, 172, 254, 0.1));
+      mask-composite: exclude;
+      opacity: 0.5;
+      pointer-events: none;
+    }
+
+    .hero-card-top {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .hero-avatar {
+      width: 70px;
+      height: 86px;
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.75);
+      background: #111;
+    }
+
+    .hero-avatar img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       display: block;
     }
 
-    .headline {
+    .hero-card-meta h3 {
+      font-size: 1rem;
+      margin-bottom: 2px;
+    }
+
+    .hero-card-meta p {
+      font-size: 0.78rem;
+      color: #aeb3df;
+    }
+
+    .hero-pill {
+      margin-top: 6px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.74rem;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: rgba(5, 224, 112, 0.08);
+      border: 1px solid rgba(5, 224, 112, 0.6);
+      color: #9ff7c5;
+    }
+
+    .hero-card-stats {
+      display: flex;
+      justify-content: space-between;
+      gap: 6px;
+      margin-top: 10px;
+    }
+
+    .stat {
       flex: 1;
-    }
-
-    .headline h1 {
-      font-size: 2.2rem;
-      letter-spacing: 0.08em;
-      margin-bottom: 6px;
-    }
-
-    .headline h1 span {
-      background: linear-gradient(120deg, #ffb347, #ff6b6b);
-      -webkit-background-clip: text;
-      color: transparent;
-      text-transform: uppercase;
-    }
-
-    .subtitle {
-      font-size: 0.95rem;
-      text-transform: uppercase;
-      letter-spacing: 0.24em;
-      color: #9da3c6;
-      margin-bottom: 14px;
-    }
-
-    .tagline {
-      font-size: 0.97rem;
-      color: #c8cce8;
-      line-height: 1.6;
-    }
-
-    .tagline strong {
-      color: #ffd27f;
-    }
-
-    .section {
-      margin-top: 28px;
-    }
-
-    .section-title {
-      font-size: 1.15rem;
-      font-weight: 600;
-      margin-bottom: 10px;
+      border-radius: 14px;
+      background: radial-gradient(circle at top, rgba(255, 179, 71, 0.22), rgba(7, 9, 20, 0.96));
+      padding: 8px 10px;
+      font-size: 0.8rem;
       color: #fdfdfd;
     }
 
-    .section-title span {
-      font-size: 0.8rem;
+    .stat small {
+      display: block;
+      font-size: 0.68rem;
+      color: #c8ccef;
+      opacity: 0.9;
+    }
+
+    .hero-card-footer {
+      margin-top: 12px;
+      font-size: 0.76rem;
+      color: #a3a7d5;
+    }
+
+    /* ---------- Sections ---------- */
+    .section {
+      margin-top: 30px;
+      border-radius: var(--radius-xl);
+      background: var(--bg-card);
+      border: 1px solid var(--border-soft);
+      padding: 20px 18px 18px;
+      box-shadow: var(--shadow-heavy);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .section::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.08), transparent 55%);
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      pointer-events: none;
+    }
+
+    .section:hover::before {
+      opacity: 1;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .section-title {
+      font-size: 1.08rem;
+      font-weight: 600;
+      color: #fdfdfd;
+    }
+
+    .section-tag {
+      font-size: 0.7rem;
       text-transform: uppercase;
-      letter-spacing: 0.18em;
-      color: #a0a6d8;
-      margin-left: 6px;
+      letter-spacing: 0.22em;
+      color: #9ea3d8;
+      opacity: 0.9;
     }
 
     .section p {
-      font-size: 0.92rem;
-      color: #c3c7e5;
-      line-height: 1.65;
+      font-size: 0.9rem;
+      color: var(--text-soft);
+      line-height: 1.7;
       margin-bottom: 10px;
     }
 
     .section ul {
       list-style: none;
       padding-left: 0;
-      font-size: 0.9rem;
-      color: #c3c7e5;
+      font-size: 0.88rem;
+      color: var(--text-soft);
+    }
+
+    .section ul li {
+      margin-bottom: 6px;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
     }
 
     .section ul li::before {
-      content: "•";
-      color: #ffb347;
-      margin-right: 6px;
+      content: "▹";
+      color: var(--accent-1);
+      margin-top: 1px;
+      font-size: 0.8rem;
     }
 
-    /* Gallery */
-    .gallery {
-      margin-top: 18px;
+    /* ---------- Gallery ---------- */
+    .gallery-grid {
+      margin-top: 14px;
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 10px;
     }
 
-    @media (min-width: 768px) {
-      .gallery {
+    @media (min-width: 820px) {
+      .gallery-grid {
         gap: 14px;
       }
     }
@@ -164,8 +487,11 @@
       position: relative;
       border-radius: 16px;
       overflow: hidden;
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 10px 26px rgba(0, 0, 0, 0.75);
+      background: #02030a;
+      transform: translateY(0);
+      transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease;
     }
 
     .gallery-item img {
@@ -176,26 +502,46 @@
       transition: transform 0.45s ease, filter 0.45s ease;
     }
 
+    .gallery-item:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.9);
+      border-color: rgba(255, 179, 71, 0.7);
+    }
+
     .gallery-item:hover img {
-      transform: scale(1.06);
+      transform: scale(1.08);
       filter: brightness(1.12);
     }
 
-    .gallery-badge {
+    .gallery-label {
       position: absolute;
       left: 10px;
       bottom: 10px;
+      right: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 4px;
       font-size: 0.72rem;
-      padding: 4px 8px;
+      padding: 5px 8px;
       border-radius: 999px;
-      background: rgba(0, 0, 0, 0.6);
-      backdrop-filter: blur(8px);
+      background: rgba(5, 6, 18, 0.85);
+      backdrop-filter: blur(10px);
       color: #fefefe;
     }
 
-    /* Social links */
+    .gallery-label span {
+      opacity: 0.85;
+    }
+
+    .gallery-label strong {
+      font-weight: 600;
+      opacity: 1;
+    }
+
+    /* ---------- Socials ---------- */
     .socials {
-      margin-top: 18px;
+      margin-top: 14px;
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
@@ -203,25 +549,26 @@
 
     .social-link {
       text-decoration: none;
-      font-size: 0.86rem;
+      font-size: 0.82rem;
       padding: 7px 12px;
       border-radius: 999px;
-      border: 1px solid rgba(255, 255, 255, 0.16);
+      border: 1px solid rgba(255, 255, 255, 0.18);
       color: #e5e7ff;
       background: rgba(255, 255, 255, 0.03);
-      transition: background 0.25s ease, transform 0.2s ease, border-color 0.25s ease;
+      transition: background var(--transition-fast), transform 0.18s ease, border-color var(--transition-fast);
     }
 
     .social-link:hover {
-      background: rgba(255, 255, 255, 0.08);
-      border-color: rgba(255, 189, 89, 0.7);
+      background: rgba(255, 255, 255, 0.09);
+      border-color: rgba(255, 189, 89, 0.8);
       transform: translateY(-1px);
     }
 
+    /* ---------- Footer ---------- */
     .footer {
-      border-top: 1px solid rgba(255, 255, 255, 0.06);
-      margin-top: 24px;
-      padding-top: 12px;
+      max-width: 1080px;
+      margin: 22px auto 30px;
+      padding: 0 18px;
       font-size: 0.78rem;
       color: #9ea3c4;
       display: flex;
@@ -229,73 +576,200 @@
       justify-content: space-between;
       gap: 8px;
     }
+
+    /* ---------- Scroll reveal ---------- */
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
   </style>
 </head>
 <body>
-  <main class="card">
-    <!-- Top (photo + name) -->
-    <section class="top-section">
-      <div class="profile-photo">
-        <!-- Main DP: you can use any of the 4 photos -->
-        <img src="images/tanim-1.jpg" alt="Tanim profile photo" />
+  <!-- Animated background blobs -->
+  <div class="bg-blur">
+    <div class="bg-blob"></div>
+    <div class="bg-blob"></div>
+    <div class="bg-blob"></div>
+  </div>
+
+  <div class="page">
+    <!-- Navbar -->
+    <header class="nav">
+      <div class="nav-left">
+        <div class="nav-logo">T</div>
+        <div class="nav-title">Tanim • Portfolio</div>
+      </div>
+      <nav class="nav-links">
+        <a href="#about" class="nav-link">About</a>
+        <a href="#skills" class="nav-link">Skills</a>
+        <a href="#gallery" class="nav-link">Gallery</a>
+        <a href="#contact" class="nav-link">Contact</a>
+      </nav>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero reveal" id="top">
+      <div class="hero-text">
+        <div class="hero-kicker">Sunset Rider • Dream Chaser</div>
+        <h1 class="hero-title">
+          Building a <span>better future</span><br />
+          one quiet sunset at a time.
+        </h1>
+        <p class="hero-subline">
+          I like <strong>calm places</strong>, <strong>deep thoughts</strong>, crypto charts and long rides near the sea.
+          I don’t talk too much, but I notice everything.
+        </p>
+        <div class="hero-tags">
+          <span class="hero-tag">Sunsets &amp; Sea Waves</span>
+          <span class="hero-tag">Low-key Lifestyle</span>
+          <span class="hero-tag">Crypto Scalper</span>
+          <span class="hero-tag">Digital Learner</span>
+        </div>
+        <div class="hero-buttons">
+          <button class="btn btn-primary" onclick="document.getElementById('gallery').scrollIntoView({behavior:'smooth'})">
+            View My Vibes
+          </button>
+          <button class="btn btn-ghost" onclick="document.getElementById('about').scrollIntoView({behavior:'smooth'})">
+            Know More About Me
+          </button>
+        </div>
       </div>
 
-      <header class="headline">
-        <h1><span>Tanim</span></h1>
-        <div class="subtitle">Sunset Rider • Dream Chaser</div>
-        <p class="tagline">
-          A guy who loves <strong>peaceful sunsets</strong>, <strong>ocean waves</strong>, and
-          <strong>long rides</strong> on two wheels. Always thinking about the next move in life,
-          trading, and self-improvement.
-        </p>
-      </header>
+      <aside class="hero-card" id="heroCard">
+        <div class="hero-card-top">
+          <div class="hero-avatar">
+            <img src="images/profile-1.jpg" alt="Tanim portrait" />
+          </div>
+          <div class="hero-card-meta">
+            <h3>Tanim</h3>
+            <p>Sunset rider • Chill mind • Focused on growth</p>
+            <div class="hero-pill">
+              <span>●</span>
+              <span>Currently leveling up in silence</span>
+            </div>
+          </div>
+        </div>
+        <div class="hero-card-stats">
+          <div class="stat">
+            <small>Core Vibes</small>
+            Peace, loyalty, growth,<br />and long rides.
+          </div>
+          <div class="stat">
+            <small>Digital Side</small>
+            Crypto trading, web<br />&amp; automation.
+          </div>
+        </div>
+        <div class="hero-card-footer">
+          Not a loud person. More of a “watch, learn and move smart” type.
+        </div>
+      </aside>
     </section>
 
     <!-- About -->
-    <section class="section">
-      <h2 class="section-title">About Me <span>Who I Am</span></h2>
+    <section class="section reveal" id="about">
+      <div class="section-header">
+        <h2 class="section-title">About Me</h2>
+        <div class="section-tag">Who I Am</div>
+      </div>
       <p>
-        My name is <strong>Tanim</strong>. I enjoy simple moments like watching the sun melt into the sea,
-        planning future goals in my head, and building a better version of myself every day.
+        I’m <strong>Tanim</strong>. I enjoy calm places, late-evening rides and the sound of waves more than crowded
+        noise. Most of the time I’m either thinking about my next move in life, learning something new, or planning
+        how to level up my skills and lifestyle.
       </p>
       <p>
-        When I’m not near the water, you’ll usually find me exploring new ideas, learning online,
-        or chilling with close people. I prefer real vibes over fake attention and value loyalty more than anything.
+        I prefer real vibes over fake attention and care more about loyalty, respect and growth than showing off.
+        I don’t talk a lot, but I notice everything and remember what matters.
       </p>
       <ul>
         <li>Location: Bangladesh</li>
-        <li>Vibes: Sunset, sea, bike & deep thoughts</li>
+        <li>Vibes: Sunset, sea, bike &amp; deep thoughts</li>
+        <li>Personality: Chill, observant, keeps circle small</li>
         <li>Goal: Better life, better mindset, better future</li>
       </ul>
     </section>
 
+    <!-- Skills / What I Do -->
+    <section class="section reveal" id="skills">
+      <div class="section-header">
+        <h2 class="section-title">What I Do &amp; My Skills</h2>
+        <div class="section-tag">Focus & Growth</div>
+      </div>
+      <p>
+        I like building and experimenting with things on the internet. Right now I’m exploring a mix of tech,
+        trading and personal development.
+      </p>
+      <ul>
+        <li>Creating and hosting clean portfolio sites using HTML, CSS &amp; GitHub Pages</li>
+        <li>Exploring automation and Telegram/online tools step by step</li>
+        <li>Crypto trading experience, especially scalping and BTC-focused setups</li>
+        <li>Good eye for aesthetic photos, captions and overall digital vibe</li>
+        <li>Fast learner: I can pick up new tools and platforms quickly</li>
+        <li>Calm decision-making under pressure (comes from trading experience)</li>
+        <li>Discipline and self-improvement mindset: trying to upgrade myself daily</li>
+      </ul>
+    </section>
+
     <!-- Gallery -->
-    <section class="section">
-      <h2 class="section-title">My Gallery <span>Moments I Like</span></h2>
-      <div class="gallery">
-        <div class="gallery-item">
-          <img src="images/tanim-1.jpg" alt="Tanim with bike watching sunset" />
-          <div class="gallery-badge">Sunset Ride</div>
-        </div>
-        <div class="gallery-item">
-          <img src="images/tanim-2.jpg" alt="Tanim at the sea with bike" />
-          <div class="gallery-badge">Calm Waves</div>
-        </div>
-        <div class="gallery-item">
-          <img src="images/tanim-3.jpg" alt="Tanim standing at the beach" />
-          <div class="gallery-badge">Golden Hour</div>
-        </div>
-        <div class="gallery-item">
-          <img src="images/tanim-4.jpg" alt="Tanim looking at the horizon" />
-          <div class="gallery-badge">Future Focus</div>
-        </div>
+    <section class="section reveal" id="gallery">
+      <div class="section-header">
+        <h2 class="section-title">Photo Gallery</h2>
+        <div class="section-tag">Photo Numbers Included</div>
+      </div>
+      <p>
+        Some moments that match my energy. নিচের label এ <strong>Photo 1, 2, 3, 4</strong> লেখা আছে – এগুলা দেখে
+        তুমি সহজে বুঝবে কোন ফাইল কোন vibe এর, আর GitHub এ নাম manage করতেও সুবিধা হবে।
+      </p>
+
+      <div class="gallery-grid">
+        <figure class="gallery-item">
+          <img src="images/sunset-bike.jpg" alt="Tanim with bike watching sunset" />
+          <figcaption class="gallery-label">
+            <strong>Photo 1</strong>
+            <span>Sunset ride • Peace moment</span>
+          </figcaption>
+        </figure>
+
+        <figure class="gallery-item">
+          <img src="images/mirror-style.jpg" alt="Tanim mirror selfie casual outfit" />
+          <figcaption class="gallery-label">
+            <strong>Photo 2</strong>
+            <span>Casual day • Clean vibes</span>
+          </figcaption>
+        </figure>
+
+        <figure class="gallery-item">
+          <img src="images/sunset-silhouette.jpg" alt="Tanim standing at the beach in sunset silhouette" />
+          <figcaption class="gallery-label">
+            <strong>Photo 3</strong>
+            <span>Golden hour • Reflection</span>
+          </figcaption>
+        </figure>
+
+        <figure class="gallery-item">
+          <img src="images/profile-1.jpg" alt="Tanim close mirror shot" />
+          <figcaption class="gallery-label">
+            <strong>Photo 4</strong>
+            <span>Low-key • Face hidden</span>
+          </figcaption>
+        </figure>
       </div>
     </section>
 
     <!-- Contact / socials -->
-    <section class="section">
-      <h2 class="section-title">Connect With Me <span>Socials</span></h2>
-      <p>If you know me personally, you already know where to find me. Otherwise, these links are enough. 🙂</p>
+    <section class="section reveal" id="contact">
+      <div class="section-header">
+        <h2 class="section-title">Connect With Me</h2>
+        <div class="section-tag">Social Links</div>
+      </div>
+      <p>
+        If you know me personally, you already know where to find me. Otherwise, these links are enough. 🙂
+      </p>
       <div class="socials">
         <!-- Replace # with your real links -->
         <a class="social-link" href="#" target="_blank" rel="noopener">Facebook</a>
@@ -304,12 +778,46 @@
         <a class="social-link" href="mailto:youremail@example.com">Email Me</a>
       </div>
     </section>
+  </div>
 
-    <!-- Footer -->
-    <footer class="footer">
-      <span>© 2025 Tanim. All rights reserved.</span>
-      <span>Made with a Galaxy S25 Ultra sunset.</span>
-    </footer>
-  </main>
+  <footer class="footer">
+    <span>© 2025 Tanim. All rights reserved.</span>
+    <span>Built in silence, shown with confidence.</span>
+  </footer>
+
+  <script>
+    // Scroll reveal
+    const reveals = document.querySelectorAll(".reveal");
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.15 }
+    );
+
+    reveals.forEach((el) => observer.observe(el));
+
+    // Simple 3D tilt for hero card
+    const heroCard = document.getElementById("heroCard");
+    if (heroCard) {
+      heroCard.addEventListener("mousemove", (e) => {
+        const rect = heroCard.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const rotateY = ((x / rect.width) - 0.5) * 10; // -5 to 5
+        const rotateX = ((y / rect.height) - 0.5) * -10; // -5 to 5
+        heroCard.style.transform = `perspective(700px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+      });
+
+      heroCard.addEventListener("mouseleave", () => {
+        heroCard.style.transform = "perspective(700px) rotateX(0deg) rotateY(0deg)";
+      });
+    }
+  </script>
 </body>
 </html>
