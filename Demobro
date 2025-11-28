@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Tanim - Personal Portfolio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background: radial-gradient(circle at top, #151a28 0, #050712 55%, #000000 100%);
+      color: #f5f5f5;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      padding: 40px 16px;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 900px;
+      background: rgba(10, 13, 24, 0.96);
+      border-radius: 24px;
+      padding: 32px 24px 26px;
+      box-shadow:
+        0 22px 60px rgba(0, 0, 0, 0.7),
+        0 0 0 1px rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      backdrop-filter: blur(18px);
+    }
+
+    @media (min-width: 768px) {
+      .card {
+        padding: 40px 40px 30px;
+      }
+    }
+
+    .top-section {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      align-items: center;
+    }
+
+    @media (min-width: 768px) {
+      .top-section {
+        flex-direction: row;
+        align-items: flex-start;
+      }
+    }
+
+    .profile-photo {
+      flex-shrink: 0;
+      width: 180px;
+      height: 220px;
+      border-radius: 20px;
+      overflow: hidden;
+      border: 2px solid rgba(255, 255, 255, 0.16);
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.75);
+    }
+
+    .profile-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .headline {
+      flex: 1;
+    }
+
+    .headline h1 {
+      font-size: 2.2rem;
+      letter-spacing: 0.08em;
+      margin-bottom: 6px;
+    }
+
+    .headline h1 span {
+      background: linear-gradient(120deg, #ffb347, #ff6b6b);
+      -webkit-background-clip: text;
+      color: transparent;
+      text-transform: uppercase;
+    }
+
+    .subtitle {
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      letter-spacing: 0.24em;
+      color: #9da3c6;
+      margin-bottom: 14px;
+    }
+
+    .tagline {
+      font-size: 0.97rem;
+      color: #c8cce8;
+      line-height: 1.6;
+    }
+
+    .tagline strong {
+      color: #ffd27f;
+    }
+
+    .section {
+      margin-top: 28px;
+    }
+
+    .section-title {
+      font-size: 1.15rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: #fdfdfd;
+    }
+
+    .section-title span {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: #a0a6d8;
+      margin-left: 6px;
+    }
+
+    .section p {
+      font-size: 0.92rem;
+      color: #c3c7e5;
+      line-height: 1.65;
+      margin-bottom: 10px;
+    }
+
+    .section ul {
+      list-style: none;
+      padding-left: 0;
+      font-size: 0.9rem;
+      color: #c3c7e5;
+    }
+
+    .section ul li::before {
+      content: "•";
+      color: #ffb347;
+      margin-right: 6px;
+    }
+
+    /* Gallery */
+    .gallery {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    @media (min-width: 768px) {
+      .gallery {
+        gap: 14px;
+      }
+    }
+
+    .gallery-item {
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.45s ease, filter 0.45s ease;
+    }
+
+    .gallery-item:hover img {
+      transform: scale(1.06);
+      filter: brightness(1.12);
+    }
+
+    .gallery-badge {
+      position: absolute;
+      left: 10px;
+      bottom: 10px;
+      font-size: 0.72rem;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(8px);
+      color: #fefefe;
+    }
+
+    /* Social links */
+    .socials {
+      margin-top: 18px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .social-link {
+      text-decoration: none;
+      font-size: 0.86rem;
+      padding: 7px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      color: #e5e7ff;
+      background: rgba(255, 255, 255, 0.03);
+      transition: background 0.25s ease, transform 0.2s ease, border-color 0.25s ease;
+    }
+
+    .social-link:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 189, 89, 0.7);
+      transform: translateY(-1px);
+    }
+
+    .footer {
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      margin-top: 24px;
+      padding-top: 12px;
+      font-size: 0.78rem;
+      color: #9ea3c4;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 8px;
+    }
+  </style>
+</head>
+<body>
+  <main class="card">
+    <!-- Top (photo + name) -->
+    <section class="top-section">
+      <div class="profile-photo">
+        <!-- Main DP: you can use any of the 4 photos -->
+        <img src="images/tanim-1.jpg" alt="Tanim profile photo" />
+      </div>
+
+      <header class="headline">
+        <h1><span>Tanim</span></h1>
+        <div class="subtitle">Sunset Rider • Dream Chaser</div>
+        <p class="tagline">
+          A guy who loves <strong>peaceful sunsets</strong>, <strong>ocean waves</strong>, and
+          <strong>long rides</strong> on two wheels. Always thinking about the next move in life,
+          trading, and self-improvement.
+        </p>
+      </header>
+    </section>
+
+    <!-- About -->
+    <section class="section">
+      <h2 class="section-title">About Me <span>Who I Am</span></h2>
+      <p>
+        My name is <strong>Tanim</strong>. I enjoy simple moments like watching the sun melt into the sea,
+        planning future goals in my head, and building a better version of myself every day.
+      </p>
+      <p>
+        When I’m not near the water, you’ll usually find me exploring new ideas, learning online,
+        or chilling with close people. I prefer real vibes over fake attention and value loyalty more than anything.
+      </p>
+      <ul>
+        <li>Location: Bangladesh</li>
+        <li>Vibes: Sunset, sea, bike & deep thoughts</li>
+        <li>Goal: Better life, better mindset, better future</li>
+      </ul>
+    </section>
+
+    <!-- Gallery -->
+    <section class="section">
+      <h2 class="section-title">My Gallery <span>Moments I Like</span></h2>
+      <div class="gallery">
+        <div class="gallery-item">
+          <img src="images/tanim-1.jpg" alt="Tanim with bike watching sunset" />
+          <div class="gallery-badge">Sunset Ride</div>
+        </div>
+        <div class="gallery-item">
+          <img src="images/tanim-2.jpg" alt="Tanim at the sea with bike" />
+          <div class="gallery-badge">Calm Waves</div>
+        </div>
+        <div class="gallery-item">
+          <img src="images/tanim-3.jpg" alt="Tanim standing at the beach" />
+          <div class="gallery-badge">Golden Hour</div>
+        </div>
+        <div class="gallery-item">
+          <img src="images/tanim-4.jpg" alt="Tanim looking at the horizon" />
+          <div class="gallery-badge">Future Focus</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact / socials -->
+    <section class="section">
+      <h2 class="section-title">Connect With Me <span>Socials</span></h2>
+      <p>If you know me personally, you already know where to find me. Otherwise, these links are enough. 🙂</p>
+      <div class="socials">
+        <!-- Replace # with your real links -->
+        <a class="social-link" href="#" target="_blank" rel="noopener">Facebook</a>
+        <a class="social-link" href="#" target="_blank" rel="noopener">Instagram</a>
+        <a class="social-link" href="#" target="_blank" rel="noopener">Telegram</a>
+        <a class="social-link" href="mailto:youremail@example.com">Email Me</a>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <span>© 2025 Tanim. All rights reserved.</span>
+      <span>Made with a Galaxy S25 Ultra sunset.</span>
+    </footer>
+  </main>
+</body>
+</html>
